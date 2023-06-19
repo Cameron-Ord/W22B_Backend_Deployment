@@ -88,7 +88,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `client_login`(t_input varchar(500),
     MODIFIES SQL DATA
 BEGIN
 	insert into login (client_id, token) values ((select client.id from client WHERE username=u_input and password = p_input), t_input);
-	select convert(token using "utf8") as token, client_id from login where login.token = t_input and password = p_input;
+	select convert(token using "utf8") as token, client_id from login inner join client on password = p_input where login.token = t_input and password = p_input
+	limit 1;
 	commit;
 END ;;
 DELIMITER ;
@@ -171,4 +172,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-19 16:18:56
+-- Dump completed on 2023-06-19 16:28:42
