@@ -58,7 +58,7 @@ CREATE TABLE `login` (
   `token` varchar(750) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login_UN` (`token`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +67,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (4,1,'ed6489c9ebf6464d97baf3c0fef16755'),(5,1,'07e41604252046158681ac1de7d0c203'),(6,1,'97038ba3a1cd4ca696e1bd3e79e70eae'),(7,1,'e4e738209f284699829ea9e6552c177f'),(8,1,'ecece883a2ed428eb1dbad13ea7ab9ca'),(9,1,'92146958db1d4f65bde52fef19a65ea4'),(17,1,'newtoken'),(19,5,'newtoken2');
+INSERT INTO `login` VALUES (4,1,'ed6489c9ebf6464d97baf3c0fef16755'),(5,1,'07e41604252046158681ac1de7d0c203'),(6,1,'97038ba3a1cd4ca696e1bd3e79e70eae'),(7,1,'e4e738209f284699829ea9e6552c177f'),(8,1,'ecece883a2ed428eb1dbad13ea7ab9ca'),(9,1,'92146958db1d4f65bde52fef19a65ea4'),(17,1,'newtoken'),(19,5,'newtoken2'),(22,6,'cedf786dfba3423fb6de96ca58a9770e');
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +88,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `client_login`(t_input varchar(500),
     MODIFIES SQL DATA
 BEGIN
 	insert into login (client_id, token) values ((select client.id from client WHERE username=u_input and password = p_input), t_input);
-	select convert(token using "utf8") as token, client_id from login where login.token = t_input;
+	select convert(token using "utf8") as token, client_id from login where login.token = t_input and password = p_input;
 	commit;
 END ;;
 DELIMITER ;
@@ -171,4 +171,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-17 23:27:14
+-- Dump completed on 2023-06-19 16:18:56
